@@ -1,20 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Home  from "./pages/Homes.jsx"
+// import Contact from "./pages/Contact.jsx";
+// import Projects from "./pages/Projects.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 export default function App() {
-  const [n, setN] = useState(0);
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    if (saved !== null) return saved === "true";
+    return (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme:dark)").matches
+    );
+  });
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode ? "true" : "false");
+  }, [darkMode]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-slate-900 text-white">
-      <div className="bg-slate-800 p-8 rounded-2xl shadow-xl space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight">Tailwind v3 Test</h1>
-        <button
-          onClick={() => setN((x) => x + 1)}
-          className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 active:scale-95 transition"
-        >
-          Clicked {n} times
-        </button>
-        <p className="text-sm text-slate-300">If you see a dark page + indigo button, it works.</p>
+    <div className={darkMode ? "dark" : ""}>
+      <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 transition-colors">
+        <Navbar darkMode={darkMode} onToggle={() => setDarkMode((d) => !d)} />
+        <main className="max-w-5xl mx-auto px-4 py-8">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            {/* <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/contact" element={<Contact />} /> */}
+          </Routes>
+        </main>
+        <footer className="text-center py-6 text-sm opacity-70">
+          © {new Date().getFullYear()} Jawad Zeyneddin
+        </footer>
       </div>
-    </main>
+    </div>
   );
 }
