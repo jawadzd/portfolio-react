@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home  from "./pages/Homes.jsx"
 import About from "./pages/About.jsx";
-// import Contact from "./pages/Contact.jsx";
+import Contact from "./pages/Contact.jsx";
 import Projects from "./pages/Projects.jsx";
 import Navbar from "./components/Navbar.jsx";
 
@@ -29,7 +29,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
-             {/*<Route path="/contact" element={<Contact />} /> */}
+             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
         <footer className="text-center py-6 text-sm opacity-70">
